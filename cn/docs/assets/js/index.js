@@ -100,9 +100,16 @@ function initHead() {
 // 初始化左侧菜单与点击事件
 function initMenu(path) {
 	var requestUrl = root_path + '/' + path + '/SUMMARY.md';
-	if(debug){
+
+	if (debug) {
 		requestUrl = root_path + path + '/SUMMARY.md';
-	}
+	} else {
+		if (path != 'start') {
+			requestUrl = path + '/SUMMARY.md';
+    }
+  }
+	//console.log(path);
+	//console.log(requestUrl);
 	$.get(requestUrl, function (data) {
 		var result = md.render(data);
 		$('.menu').html(result);
@@ -114,6 +121,10 @@ function initMenu(path) {
 			location.hash = 'sort=' + root_path + '/' + path + '&doc=' + $(this).attr('href')
 			if(debug){
 				location.hash = 'sort=' + root_path + path + '&doc=' + $(this).attr('href')
+			} else {
+				if (path != 'start') {
+					location.hash = 'sort=' + path + '&doc=' + $(this).attr('href')
+				}
 			}
 			return false
 		})
