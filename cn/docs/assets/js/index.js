@@ -1,5 +1,5 @@
 var root_path = "/NcfDocs/cn/docs/doc";
-var debug = true;
+var debug = false;
 
 // 程序入口
 $(function () {
@@ -62,7 +62,6 @@ function initZoom () {
 function initAnchor (doc) {
 	$('.menu a').removeClass('hot')
 	var $a = $('a[href="' + doc + '"]')
-	console.log($a);
 	// 避免刷新页面，左侧菜单并未初始化。
 	if ($a.length === 0) {
 		setTimeout(() => initAnchor(doc), 500)
@@ -80,7 +79,8 @@ function initAnchor (doc) {
 
 // 初始化右上角分类大链接跳转
 function initHead() {
-	$.get(root_path + '/SUMMARY.md', function (data) {
+	var requestUrl = root_path + '/SUMMARY.md';
+	$.get(requestUrl, function (data) {
 		var result = md.render(data);
 		$('.header').append(result);
 		$('.header ul').addClass('g-clearfix');
@@ -99,7 +99,8 @@ function initHead() {
 
 // 初始化左侧菜单与点击事件
 function initMenu(path) {
-	$.get(root_path + '/' + path + '/SUMMARY.md', function (data) {
+	var requestUrl = root_path + path + '/SUMMARY.md';
+	$.get(requestUrl, function (data) {
 		var result = md.render(data);
 		$('.menu').html(result);
 		$('.menu a').click(function () {
@@ -107,7 +108,7 @@ function initMenu(path) {
 				window.open($(this).attr('href'));
 				return false
 			}
-			location.hash = 'sort=' + root_path + '/' + path + '&doc=' + $(this).attr('href')
+			location.hash = 'sort=' + root_path + path + '&doc=' + $(this).attr('href')
 			return false
 		})
 		$('.content').css('padding-left', $('.menu').width())
