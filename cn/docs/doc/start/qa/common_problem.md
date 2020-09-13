@@ -30,12 +30,16 @@ dotnet tool update --global dotnet-ef --version 3.0.0-preview7.19362.6
 ```
 执行此命令之后再更新数据库就执行成功了。
 
-[参考地址](https://blog.csdn.net/topdeveloperr/article/details/101282099)
+[参考地址:https://blog.csdn.net/topdeveloperr/article/details/101282099](https://blog.csdn.net/topdeveloperr/article/details/101282099)
 
 > NCF如何调试
 
-[参考地址](https://www.cnblogs.com/szw/p/debug-remote-source-code.html)
+[参考地址:https://www.cnblogs.com/szw/p/debug-remote-source-code.html](https://www.cnblogs.com/szw/p/debug-remote-source-code.html)
 
 > 后台UI框架
 
-[参考地址](https://colorlib.com/polygon/gentelella/icons.html)
+[参考地址:https://element.eleme.cn/#/zh-CN](https://element.eleme.cn/#/zh-CN)
+
+> 图标参考
+
+[参考地址:https://colorlib.com/polygon/gentelella/icons.html](https://colorlib.com/polygon/gentelella/icons.html)

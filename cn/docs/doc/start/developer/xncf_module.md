@@ -35,50 +35,106 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 6.完成自定义方法
 
-    public class LaunchApp_Parameters : IFunctionParameter
+    public MyFunction(IServiceProvider serviceProvider) : base(serviceProvider)
+    {
+    }
+
+    public class Parameters : IFunctionParameter
     {
         [Required]
-        [MaxLength(300)]
-        [Description("自定义路径||文件名")]
-        public string FilePath { get; set; }
+        [MaxLength(50)]
+        [Description("名称||双竖线之前为参数名称，双竖线之后为参数注释")]
+        public string Name { get; set; }
+
+        [Required]
+        [Description("数字||数字1")]
+        public int Number1 { get; set; }
+
+
+        [Required]
+        [Description("数字||数字2")]
+        public int Number2 { get; set; }
+
+        [Description("运算符||")]//下拉列表
+        public SelectionList Operator { get; set; } = new SelectionList(SelectionType.DropDownList, new[] {
+                new SelectionItem("+","加法","数字1 + 数字2",false),
+                new SelectionItem("-","减法","数字1 - 数字2",true),
+                new SelectionItem("×","乘法","数字1 × 数字2",false),
+                new SelectionItem("÷","除法","数字1 ÷ 数字2",false)
+        });
+
+        [Description("计算平方||")]//多选框
+        public SelectionList Power { get; set; } = new SelectionList(SelectionType.CheckBoxList, new[] {
+                new SelectionItem("2","平方","计算上述结果之后再计算平方",false),
+                new SelectionItem("3","三次方","计算上述结果之后再计算三次方",false)
+        });
     }
 
-    //注意：Name 必须在单个 Xncf 模块中唯一！
-    public override string Name => "应用程序";
 
-    public override string Description => "启动所有的程序";
+    public override string Name => "我的函数";
 
-    public override Type FunctionParameterType => typeof(LaunchApp_Parameters);
+    public override string Description => "我的函数的注释";
 
-    public LaunchApp(IServiceProvider serviceProvider) : base(serviceProvider)
-    {
-    }
+    public override Type FunctionParameterType => typeof(Parameters);
 
-    /// <summary>
-    /// 运行
-    /// </summary>
-    /// <param name="param"></param>
-    /// <returns></returns>
     public override FunctionResult Run(IFunctionParameter param)
     {
-        var typeParam = param as LaunchApp_Parameters;
-
-        FunctionResult result = new FunctionResult()
+        return FunctionHelper.RunFunction<Parameters>(param, (typeParam, sb, result) =>
         {
-            Success = true
-        };
+            /* 页面上点击“执行”后，将调用这里的方法
+                *
+                * 参数说明：
+                * param：IFunctionParameter 类型对象
+                * typeParam：Senparc.Xncf.Application.MyFunction.Parameters 类型对象
+                * sb：日志
+                * result：返回结果
+                */
 
-        StringBuilder sb = new StringBuilder();
-        base.RecordLog(sb, "开始运行 LaunchApp");
+            double calcResult = typeParam.Number1;
+            var theOperator = typeParam.Operator.SelectedValues.FirstOrDefault();
+            switch (theOperator)
+            {
+                case "+":
+                    calcResult = calcResult + typeParam.Number2;
+                    break;
+                case "-":
+                    calcResult = calcResult - typeParam.Number2;
+                    break;
+                case "×":
+                    calcResult = calcResult * typeParam.Number2;
+                    break;
+                case "÷":
+                    if (typeParam.Number2 == 0)
+                    {
+                        result.Success = false;
+                        result.Message = "被除数不能为0！";
+                        return;
+                    }
+                    calcResult = calcResult / typeParam.Number2;
+                    break;
+                default:
+                    result.Success = false;
+                    result.Message = $"未知的运算符：{theOperator}";
+                    return;
+            }
 
-        StartApp(typeParam.FilePath);
+            sb.AppendLine($"进行运算：{typeParam.Number1} {theOperator} {typeParam.Number2} = {calcResult}");
 
-        //sb.AppendLine($"LaunchPath{typeParam.LaunchPath}");
-        sb.AppendLine($"FilePath{typeParam.FilePath}");
+            Action<int> raisePower = power =>
+            {
+                if (typeParam.Power.SelectedValues.Contains(power.ToString()))
+                {
+                    var oldValue = calcResult;
+                    calcResult = Math.Pow(calcResult, power);
+                    sb.AppendLine($"进行{power}次方运算：{oldValue}{(power == 2 ? "²" : "³")} = {calcResult}");
+                }
+            };
 
-        result.Log = sb.ToString();
-        result.Message = "操作成功！";
-        return result;
+            raisePower(2);
+            raisePower(3);
+
+            result.Message = $"计算结果：{calcResult}。计算过程请看日志";
+        });
     }
 
 > 7.在Register中注册自定义的方法类
@@ -103,13 +159,12 @@ NCF 底层支持库官方 Nuget 包源码
 
 ![Image text](/start/images/page_project_support_razor.png)
 
-> 2.Senparc.Core.Models.DataBaseModel新建模型Color类
+> 2.Senparc.Xncf.ExtensionAreaTemplate新建模型Color类
 
-    using Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto;
     using Senparc.Ncf.Core.Models;
+    using Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto;
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel.DataAnnotations;
 
     namespace Senparc.Xncf.ExtensionAreaTemplate
     {
@@ -165,7 +220,7 @@ NCF 底层支持库官方 Nuget 包源码
             public void Random()
             {
                 //随机产生颜色代码
-                var radom = new Random(SystemTime.Now.Second);
+                var radom = new Random();
                 Func<int> getRadomColorCode = () => radom.Next(0, 255);
                 Red = getRadomColorCode();
                 Green = getRadomColorCode();
@@ -188,15 +243,12 @@ NCF 底层支持库官方 Nuget 包源码
         }
     }
 
-> 3.Senparc.Core.Models.DataBaseModel新建ColorDto类
+
+> 3.Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto新建ColorDto类
 
 ![Image text](/start/images/page_create_dto_file_path.png)
 
     using Senparc.Ncf.Core.Models;
-    using Senparc.Ncf.Core.Models.DataBaseModel;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     namespace Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto
     {
@@ -210,7 +262,6 @@ NCF 底层支持库官方 Nuget 包源码
             /// 颜色码，0-255
             /// </summary>
             public int Green { get; private set; }
-
             /// <summary>
             /// 颜色码，0-255
             /// </summary>
@@ -220,6 +271,7 @@ NCF 底层支持库官方 Nuget 包源码
         }
     }
 
+
 > 4.AutoMapperConfigs增加以下代码
 
 ![Image text](/start/images/page_create_mapping_file_path.png)
@@ -227,14 +279,11 @@ NCF 底层支持库官方 Nuget 包源码
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Senparc.Ncf.Core.Models.DataBaseModel;
     using Senparc.Ncf.XncfBase.Attributes;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     namespace Senparc.Xncf.ExtensionAreaTemplate.Models
     {
         [XncfAutoConfigurationMapping]
-        public class AreaTemplate_ColorConfigurationMapping : ConfigurationMappingWithIdBase<Color, int>
+        public class ExtensionAreaTemplate_ColorConfigurationMapping : ConfigurationMappingWithIdBase<Color, int>
         {
             public override void Configure(EntityTypeBuilder<Color> builder)
             {
@@ -245,38 +294,29 @@ NCF 底层支持库官方 Nuget 包源码
         }
     }
 
-> 5.Senparc.Areas.Admin.Areas.Admin.Pages下建立页面，更改IndexModel继承为BaseAdminPageModel
+
+> 5.Senparc.Xncf.ExtensionAreaTemplate.Areas.ExtensionAreaTemplate.Pages下建立页面，更改Index继承为Senparc.Ncf.AreaBase.Admin.AdminXncfModulePageModelBase
 
 ![Image text](/start/images/page_create_pages_file_path.png)
 
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
-    using Senparc.Xncf.ExtensionAreaTemplate.Services;
-    using Senparc.Ncf.Core.Models.DataBaseModel;
-    using Senparc.Ncf.Service;
-    using Senparc.Ncf.XncfBase;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.EntityFrameworkCore.Infrastructure;
-    using Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto;
     using Senparc.Ncf.Core.Enums;
-    using Senparc.Xncf.ExtensionAreaTemplate.Models;
+    using Senparc.Ncf.Service;
+    using Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto;
+    using Senparc.Xncf.ExtensionAreaTemplate.Services;
+    using System;
+    using System.Threading.Tasks;
 
-    namespace Senparc.Xncf.ExtensionAreaTemplate.Areas.MyApp.Pages
+    namespace Senparc.Xncf.ExtensionAreaTemplate.Areas.ExtensionAreaTemplate.Pages
     {
-        public class MyHomePage : Senparc.Ncf.AreaBase.Admin.AdminXncfModulePageModelBase
+        public class DatabaseSample : Senparc.Ncf.AreaBase.Admin.AdminXncfModulePageModelBase
         {
             public ColorDto ColorDto { get; set; }
 
             private readonly ColorService _colorService;
             private readonly IServiceProvider _serviceProvider;
-            public MyHomePage(IServiceProvider serviceProvider, ColorService colorService, Lazy<XncfModuleService> XncfModuleService)
-                : base(XncfModuleService)
+            public DatabaseSample(IServiceProvider serviceProvider, ColorService colorService, Lazy<XncfModuleService> xncfModuleService)
+                : base(xncfModuleService)
             {
                 _colorService = colorService;
                 _serviceProvider = serviceProvider;
@@ -289,34 +329,44 @@ NCF 底层支持库官方 Nuget 包源码
                 return Task.CompletedTask;
             }
 
-            public async Task OnGetBrightenAsync()
+            public IActionResult OnGetDetail()
             {
-                ColorDto = await _colorService.Brighten().ConfigureAwait(false);
+                var color = _colorService.GetObject(z => true, z => z.Id, OrderingType.Descending);
+                var colorDto = _colorService.Mapper.Map<ColorDto>(color);
+                //return Task.CompletedTask;
+                return Ok(new { colorDto, XncfModuleDto });
             }
 
-            public async Task OnGetDarkenAsync()
+            public async Task<IActionResult> OnGetBrightenAsync()
             {
-                ColorDto = await _colorService.Darken().ConfigureAwait(false);
+                var colorDto = await _colorService.Brighten().ConfigureAwait(false);
+                return Ok(colorDto);
             }
-            public async Task OnGetRandomAsync()
+
+            public async Task<IActionResult> OnGetDarkenAsync()
             {
-                ColorDto = await _colorService.Random().ConfigureAwait(false);
+                var colorDto = await _colorService.Darken().ConfigureAwait(false);
+                return Ok(colorDto);
+            }
+            public async Task<IActionResult> OnGetRandomAsync()
+            {
+                var colorDto = await _colorService.Random().ConfigureAwait(false);
+                return Ok(colorDto);
             }
         }
     }
+
 
 
 > 6.增加Service类
 
 ![Image text](/start/images/page_create_service_file_path.png)
 
-    using Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto;
     using Senparc.Ncf.Core.Enums;
     using Senparc.Ncf.Repository;
     using Senparc.Ncf.Service;
+    using Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto;
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Threading.Tasks;
 
     namespace Senparc.Xncf.ExtensionAreaTemplate.Services
@@ -367,29 +417,28 @@ NCF 底层支持库官方 Nuget 包源码
         }
     }
 
-> 7.Senparc.Core.Models中SenparcEntities里面增加
+
+> 7.Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel中ExtensionAreaTemplateSenparcEntities里面增加
 
 ![Image text](/start/images/page_create_entity_file_path.png)
 
     using Microsoft.EntityFrameworkCore;
-    using Senparc.Ncf.Core.Models;
     using Senparc.Ncf.XncfBase;
     using Senparc.Ncf.XncfBase.Database;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     namespace Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel
     {
-        public class MySenparcEntities : XncfDatabaseDbContext
+        public class ExtensionAreaTemplateSenparcEntities : XncfDatabaseDbContext
         {
             public override IXncfDatabase XncfDatabaseRegister => new Register();
-            public MySenparcEntities(DbContextOptions<MySenparcEntities> dbContextOptions) : base(dbContextOptions)
+            public ExtensionAreaTemplateSenparcEntities(DbContextOptions<ExtensionAreaTemplateSenparcEntities> dbContextOptions) : base(dbContextOptions)
             {
             }
 
             public DbSet<Color> Colors { get; set; }
 
+            //DOT REMOVE OR MODIFY THIS LINE 请勿移除或修改本行 - Entities Point
+            //ex. public DbSet<Color> Colors { get; set; }
 
             //如无特殊需需要，OnModelCreating 方法可以不用写，已经在 Register 中要求注册
             //protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -397,6 +446,7 @@ NCF 底层支持库官方 Nuget 包源码
             //}
         }
     }
+
 
 > 8.在Senparc.Web下执行
 
@@ -412,7 +462,7 @@ NCF 底层支持库官方 Nuget 包源码
         /// <summary>
         /// 设计时 DbContext 创建（仅在开发时创建 Code-First 的数据库 Migration 使用，在生产环境不会执行）
         /// </summary>
-        public class SenparcDbContextFactory : SenparcDesignTimeDbContextFactoryBase<MySenparcEntities, Register>
+        public class SenparcDbContextFactory : SenparcDesignTimeDbContextFactoryBase<ExtensionAreaTemplateSenparcEntities, Register>
         {
             /// <summary>
             /// 用于寻找 App_Data 文件夹，从而找到数据库连接字符串配置信息
@@ -421,12 +471,11 @@ NCF 底层支持库官方 Nuget 包源码
         }
     }
 
-
 > 9.根据实际的Entities的名称，添加数据库更新命令
 
 ![Image text](/start/images/page_entity_name.png)
 
-    add-migration Xncf_AreaTemplate_Init2 -Context MySenparcEntities
+    add-migration Xncf_AreaTemplate_Init2 -Context ExtensionAreaTemplateSenparcEntities
 
 
 ## 欢迎贡献代码！

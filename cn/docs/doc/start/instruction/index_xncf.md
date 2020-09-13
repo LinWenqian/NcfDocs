@@ -29,7 +29,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 ## Xncf WeixinManageDemo项目地址
 
-[Senparc.Xncf.WeixinManager](https://github.com/NeuCharFramework/NcfPackageSources)
+[Senparc.Xncf.WeixinManager](https://github.com/NeuCharFramework/Senparc.Xncf.WeixinManager)
 
 ## Xncf 模块命名规则
 

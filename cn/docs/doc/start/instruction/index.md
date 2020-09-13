@@ -17,7 +17,7 @@ NeuCharFramework(NCF) 是一整套可用于构建基础项目的框架，包含�
 
 <center><img src="https://weixin.senparc.com/images/NCF/login.jpg" /></center>
 
-> 当前快速更新分支：[Developer-RazorPage-DDD](https://github.com/NeuCharFramework/NCF/tree/Developer-RazorPage-DDD)
+> 当前快速更新分支：[Developer](https://github.com/NeuCharFramework/NCF/tree/Developer)
 
 > 我们欢迎第三方开源组件提供自己的解决方案，我们将会测试并集成到 NCF 中。
 
@@ -35,9 +35,9 @@ NCF 除了会为大家提供完善的框架代码，还会：
 
 1. 提供博客和视频教程（也欢迎开发者参与或发起）。
 
-1. 提供交流社区，包括但不仅限于[问答网站](https://weixin.senparc.com/QA)、[QQ群](#qq-技术交流群)、微信群、直播群。
+1. 提供交流社区，包括但不仅限于[问答网站](https://weixin.senparc.com/QA)、[QQ群](##QQ-技术交流群)、微信群、直播群。
 
-## QQ 技术交流群
+## QQ-技术交流群
 
 <img src="https://sdk.weixin.senparc.com/images/QQ_Group_Avatar/NCF/QQ-Group.jpg" width="380" />
 
@@ -47,9 +47,9 @@ NCF 除了会为大家提供完善的框架代码，还会：
 
 - Visual Studio 2019+ 或 VS Code 最新版本
 
-- .NET Core 3.1+ ，SDK下载地址：https://dotnet.microsoft.com/download/dotnet-core/3.1
+- .NET Core 3.1+ ，[SDK下载地址](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
-- 如需查看或修改基础包源代码，请看此项目：https://github.com/NeuCharFramework/NcfPackageSources
+- 如需查看或修改基础包源代码，请看此项目：[NcfPackageSources](https://github.com/NeuCharFramework/NcfPackageSources)
 
 ## 如何安装
 
