@@ -1,9 +1,8 @@
-var root_path = "/ScfDocs/cn/docs/doc";
-var debug = false;
+var root_path = "/NcfDocs/cn/docs/doc";
+var debug = true;
 
 // 程序入口
 $(function () {
-	debugger
 	if(debug){
 		root_path = "";
 	}
@@ -63,6 +62,7 @@ function initZoom () {
 function initAnchor (doc) {
 	$('.menu a').removeClass('hot')
 	var $a = $('a[href="' + doc + '"]')
+	console.log($a);
 	// 避免刷新页面，左侧菜单并未初始化。
 	if ($a.length === 0) {
 		setTimeout(() => initAnchor(doc), 500)
