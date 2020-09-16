@@ -477,5 +477,6 @@ NCF 底层支持库官方 Nuget 包源码
 
     add-migration Xncf_AreaTemplate_Init2 -Context ExtensionAreaTemplateSenparcEntities
 
+> 10.更新新加的数据库表及字段，只需要运行NCF主程序，更新此引用的模块，或者重新安装此模块即可
 
 ## 欢迎贡献代码！
