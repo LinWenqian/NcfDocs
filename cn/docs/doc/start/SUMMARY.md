@@ -13,4 +13,5 @@
 ## 新发布
 
 * [新功能](release/new_function.md)
+* [升级指导](release/update.md)
 * [日志](release/log.md)
