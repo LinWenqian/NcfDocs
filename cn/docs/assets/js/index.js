@@ -1,5 +1,5 @@
 var root_path = "/NcfDocs/cn/docs/doc";
-var debug = true;
+var debug = false;
 
 // 程序入口
 $(function () {
