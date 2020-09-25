@@ -1,9 +1,6 @@
 <img src="https://camo.githubusercontent.com/cd562a0b211530aa3da01adf55557d443e7d147e/68747470733a2f2f77656978696e2e73656e706172632e636f6d2f696d616765732f4e43462f6c6f676f2e706e67" width="300" />
 
 
-
-
-
 # NCF - NeuCharFramework 首页
 
 NeuCharFramework(NCF) 是一整套可用于构建基础项目的框架，包含了基础的缓存、数据库、模型、验证及配套管理后台，模块化，具有高度的可扩展性。
