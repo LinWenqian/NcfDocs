@@ -1,5 +1,5 @@
 var root_path = "/NcfDocs/cn/docs/doc";
-var debug = false;
+var debug = true;
 
 // 程序入口
 $(function () {
@@ -118,7 +118,7 @@ function initMenu(path) {
 				window.open($(this).attr('href'));
 				return false
 			}
-			location.hash = 'sort=' + root_path + '/' + path + '&doc=' + $(this).attr('href')
+			// location.hash = 'sort=' + root_path + '/' + path + '&doc=' + $(this).attr('href')
 			if(debug){
 				location.hash = 'sort=' + root_path + path + '&doc=' + $(this).attr('href')
 			} else {
