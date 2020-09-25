@@ -1,6 +1,5 @@
 var root_path = "/NcfDocs/cn/docs/doc";
-var init_path = '';
-var debug = false;
+var debug = true;
 
 // 程序入口
 $(function () {
@@ -9,7 +8,7 @@ $(function () {
 	}
 	initZoom();
 	initHead();
-	// initReadMe(root_path + '/start/home/index.md');
+	initReadMe(root_path + '/start/home/index.md');
 })
 
 // md文档解析器初始化
@@ -29,7 +28,9 @@ function Hash (name, value) {
 // 锚点变化处理，模拟 Router
 function hashChange () {
 	var sort = Hash('sort')
+	console.log('sort-' + sort)
 	var doc = Hash('doc')
+	console.log('doc---' + doc)
 	$('#readme').html('')
 	$('#anchor').html('')
 	$('#chapter-list').html('')
@@ -121,10 +122,10 @@ function initMenu(path) {
 				window.open($(this).attr('href'));
 				return false
 			}
-			// location.hash = 'sort=' + root_path + '/' + path + '&doc=' + $(this).attr('href')
 			if(debug){
 				location.hash = 'sort=' + root_path + path + '&doc=' + $(this).attr('href')
 			} else {
+				location.hash = 'sort=' + root_path + '/' + path + '&doc=' + $(this).attr('href')
 				if (path != 'start') {
 					location.hash = 'sort=' + path + '&doc=' + $(this).attr('href')
 				}
@@ -138,7 +139,7 @@ function initMenu(path) {
 
 // 初始化文章
 function initReadMe (path) {
-	console.log(path);
+	//console.log(path);
 	$.get(path, function (data) {
 		var result = md.render(data);
 		// console.log('outlog----' + result);
@@ -160,7 +161,7 @@ function initReadMe (path) {
 
 // 生成文章右侧内容标题
 function initChapterList () {
-	$('#chapter-list').append('<div class="chapter-title">本文目录</div>')
+	$('#chapter-list').html('<div class="chapter-title">本文目录</div>')
 	$('#readme h1, #readme h2').each(function () {
 		var _top = $(this).offset().top
 		var $item = $('<div class="chapter-item">' + $(this).text() + '</div>')
@@ -198,13 +199,6 @@ function autoImagePrefix (doc) {
 				doc.push(path);
 				//return 'src="' + doc.join('/') + '"';
 				return 'src="' + root_path + '/' + path + '"';
-				// if(debug){
-				// 	return 'src="' + root_path + '/' + path + '"';
-				// } else {
-				// 	if (path != 'start') {
-				// 		return 'src="' + path + '"';
-				// 	}
-				// }
 			}
 			return match
 		})
