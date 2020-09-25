@@ -6,15 +6,15 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 1.新建一个Dotnet Core的Class Library项目
 
-![Image text](/start/images/create_dotnet_core_class_library.png)
+![Image text](/start/images/developer/xncf_module/create_dotnet_core_class_library.png)
 
 > 2.输入Class Libray的名称,点击创建
 
-![Image text](/start/images/input_dotnet_core_class_library_name.png)
+![Image text](/start/images/developer/xncf_module/input_dotnet_core_class_library_name.png)
 
 > 3.建立Register.cs
 
-![Image text](/start/images/create_register_and_functions_folder.png)
+![Image text](/start/images/developer/xncf_module/create_register_and_functions_folder.png)
 
 > 4.配置Register中的必要内容
 
@@ -27,11 +27,11 @@ NCF 底层支持库官方 Nuget 包源码
 |  Icon  |  显示在菜单旁边的[字体图标](https://colorlib.com/polygon/gentelella/icons.html)
 |  Description  |  模块的说明文字,安装前可以根据此说明了解模块的具体功能
 
-![Image text](/start/images/register_content.png)
+![Image text](/start/images/developer/xncf_module/register_content.png)
 
 > 5.创建自定义方法类
 
-![Image text](/start/images/create_functions_class_library.png)
+![Image text](/start/images/developer/xncf_module/create_functions_class_library.png)
 
 > 6.完成自定义方法
 
@@ -139,7 +139,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 7.在Register中注册自定义的方法类
 
-![Image text](/start/images/register_add_functions.png)
+![Image text](/start/images/developer/xncf_module/register_add_functions.png)
 
 > 8.发布Nuget,详细步骤到发布Nuget
 
@@ -147,17 +147,17 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 1.新建一个DotnetCore Class Library项目，输入项目名称
 
-![Image text](/start/images/page_create_dotnet_core_class_library.png)
+![Image text](/start/images/developer/xncf_module/page_create_dotnet_core_class_library.png)
 
-![Image text](/start/images/page_create_dotnet_core_class_library_input_name.png)
+![Image text](/start/images/developer/xncf_module/page_create_dotnet_core_class_library_input_name.png)
 
 >> 1.1 目录名称如下
 
-![Image text](/start/images/page_folder_struct.png)
+![Image text](/start/images/developer/xncf_module/page_folder_struct.png)
 
 >> 1.2 设置项目支持RazorPage功能
 
-![Image text](/start/images/page_project_support_razor.png)
+![Image text](/start/images/developer/xncf_module/page_project_support_razor.png)
 
 > 2.Senparc.Xncf.ExtensionAreaTemplate新建模型Color类
 
@@ -246,7 +246,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 3.Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel.Dto新建ColorDto类
 
-![Image text](/start/images/page_create_dto_file_path.png)
+![Image text](/start/images/developer/xncf_module/page_create_dto_file_path.png)
 
     using Senparc.Ncf.Core.Models;
 
@@ -274,7 +274,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 4.AutoMapperConfigs增加以下代码
 
-![Image text](/start/images/page_create_mapping_file_path.png)
+![Image text](/start/images/developer/xncf_module/page_create_mapping_file_path.png)
 
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Senparc.Ncf.Core.Models.DataBaseModel;
@@ -297,7 +297,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 5.Senparc.Xncf.ExtensionAreaTemplate.Areas.ExtensionAreaTemplate.Pages下建立页面，更改Index继承为Senparc.Ncf.AreaBase.Admin.AdminXncfModulePageModelBase
 
-![Image text](/start/images/page_create_pages_file_path.png)
+![Image text](/start/images/developer/xncf_module/page_create_pages_file_path.png)
 
     using Microsoft.AspNetCore.Mvc;
     using Senparc.Ncf.Core.Enums;
@@ -360,7 +360,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 6.增加Service类
 
-![Image text](/start/images/page_create_service_file_path.png)
+![Image text](/start/images/developer/xncf_module/page_create_service_file_path.png)
 
     using Senparc.Ncf.Core.Enums;
     using Senparc.Ncf.Repository;
@@ -420,7 +420,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 7.Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel中ExtensionAreaTemplateSenparcEntities里面增加
 
-![Image text](/start/images/page_create_entity_file_path.png)
+![Image text](/start/images/developer/xncf_module/page_create_entity_file_path.png)
 
     using Microsoft.EntityFrameworkCore;
     using Senparc.Ncf.XncfBase;
@@ -450,7 +450,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 8.在Senparc.Web下执行
 
-![Image text](/start/images/page_dbcontext.png)
+![Image text](/start/images/developer/xncf_module/page_dbcontext.png)
 
     using Senparc.Xncf.ExtensionAreaTemplate.Models.DatabaseModel;
     using Senparc.Ncf.XncfBase.Database;
@@ -473,7 +473,7 @@ NCF 底层支持库官方 Nuget 包源码
 
 > 9.根据实际的Entities的名称，添加数据库更新命令
 
-![Image text](/start/images/page_entity_name.png)
+![Image text](/start/images/developer/xncf_module/page_entity_name.png)
 
     add-migration Xncf_AreaTemplate_Init2 -Context ExtensionAreaTemplateSenparcEntities
 
