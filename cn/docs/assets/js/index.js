@@ -1,4 +1,5 @@
 var root_path = "/NcfDocs/cn/docs/doc";
+var init_path = '';
 var debug = true;
 
 // 程序入口
@@ -8,6 +9,7 @@ $(function () {
 	}
 	initZoom();
 	initHead();
+	initReadMe('start/home/index.md');
 })
 
 // md文档解析器初始化
@@ -86,6 +88,7 @@ function initHead() {
 		$('.header ul').addClass('g-clearfix');
 		$('.header a').click(function () {
 			location.hash = 'sort=' + $(this).attr('href')
+			initReadMe('start/home/index.md');
 			return false
 		})
 		if (location.hash === '') {
@@ -135,8 +138,10 @@ function initMenu(path) {
 
 // 初始化文章
 function initReadMe (path) {
+	console.log(path);
 	$.get(path, function (data) {
 		var result = md.render(data);
+		console.log('outlog----' + result);
 
 		result = autoImagePrefix(result)
 
