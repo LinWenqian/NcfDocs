@@ -9,7 +9,7 @@ $(function () {
 	}
 	initZoom();
 	initHead();
-	initReadMe('start/home/index.md');
+	// initReadMe(root_path + '/start/home/index.md');
 })
 
 // md文档解析器初始化
@@ -88,7 +88,7 @@ function initHead() {
 		$('.header ul').addClass('g-clearfix');
 		$('.header a').click(function () {
 			location.hash = 'sort=' + $(this).attr('href')
-			initReadMe('start/home/index.md');
+			initReadMe(root_path + '/start/home/index.md');
 			return false
 		})
 		if (location.hash === '') {
@@ -141,7 +141,7 @@ function initReadMe (path) {
 	console.log(path);
 	$.get(path, function (data) {
 		var result = md.render(data);
-		console.log('outlog----' + result);
+		// console.log('outlog----' + result);
 
 		result = autoImagePrefix(result)
 
@@ -198,6 +198,13 @@ function autoImagePrefix (doc) {
 				doc.push(path);
 				//return 'src="' + doc.join('/') + '"';
 				return 'src="' + root_path + '/' + path + '"';
+				// if(debug){
+				// 	return 'src="' + root_path + '/' + path + '"';
+				// } else {
+				// 	if (path != 'start') {
+				// 		return 'src="' + path + '"';
+				// 	}
+				// }
 			}
 			return match
 		})
