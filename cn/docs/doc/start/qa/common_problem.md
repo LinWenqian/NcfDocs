@@ -2,7 +2,7 @@
 
 > 如何修改数据库配置
 
-![Image Text](/start/images/qa/common_problem/modify_database_connectstring.png)
+![Image Text](/start/qa/images/common_problem/modify_database_connectstring.png)
 
 > .net命令dotnet ef执行报错
 

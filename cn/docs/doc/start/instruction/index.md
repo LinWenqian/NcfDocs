@@ -60,11 +60,11 @@ NCF 除了会为大家提供完善的框架代码，还会：
 
 > 先在appsetting里面看一下SenparcCoreSetting中的DatabaseName是什么节点，如下图
 
-![Image Text](/start/images/instruction/index/appsetting_database_name.png)
+![Image Text](/start/instruction/images/index/appsetting_database_name.png)
 
 > 再到Senparc.Web/App_Data/SenparcConfig.config文件中找到对应节点下的ConnectionStringFull，修改即可
 
-![Image Text](/start/images/instruction/index/senparcconfig_database.png)
+![Image Text](/start/instruction/images/index/senparcconfig_database.png)
 
 ### 第二步：准备命令行工具（可跳过）
 
@@ -99,11 +99,11 @@ Done.
 
 > 如果报错如下图
 
-![Image Text](/start/images/instruction/index/exec_updata_database_error.png)
+![Image Text](/start/instruction/images/index/exec_updata_database_error.png)
 
 > 则是因为默认的启动项目不是Senparc.Web导致的，更改默认的启动项目为Senparc.Web，再执行此命令即可
 
-![Image Text](/start/images/instruction/index/set_as_startup_project.png)
+![Image Text](/start/instruction/images/index/set_as_startup_project.png)
 
 
 

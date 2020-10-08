@@ -4,29 +4,29 @@
 
 待审核状态：
 
-![Image Text](/start/images/new_function/fn_module_status_no_open.png)
+![Image Text](/start/release/images/new_function/fn_module_status_no_open.png)
 
 已安装状态：
 
-![Image Text](/start/images/new_function/fn_module_status_open.png)
+![Image Text](/start/release/images/new_function/fn_module_status_open.png)
 
 已删除状态：
 
-![Image Text](/start/images/new_function/fn_module_status_deleted.png)
+![Image Text](/start/release/images/new_function/fn_module_status_deleted.png)
 
 ## 一键生成Xncf模块
 
 进入 `NCF` 模块管理，可以看到新发现的模块
 
-![Image Text](/start/images/new_function/fn_xncf_module_builder.png)
+![Image Text](/start/release/images/new_function/fn_xncf_module_builder.png)
 
 点击执行
 
-![Image Text](/start/images/new_function/fn_xncf_module_builder_execute.png)
+![Image Text](/start/release/images/new_function/fn_xncf_module_builder_execute.png)
 
 显示执行表单
 
-![Image Text](/start/images/new_function/fn_xncf_module_builder_execute_form.png)
+![Image Text](/start/release/images/new_function/fn_xncf_module_builder_execute_form.png)
 
 ```
 解决方案文件（.sln）路径: `C:\Code\NCF\ncf.sln`
@@ -43,21 +43,21 @@
 
 生成的项目目录结构
 
-![Image Text](/start/images/new_function/fn_xncf_module_builder_struct.png)
+![Image Text](/start/release/images/new_function/fn_xncf_module_builder_struct.png)
 
 安装后的模块展示
 
-![Image Text](/start/images/new_function/fn_xncf_module_builder_show.png)
+![Image Text](/start/release/images/new_function/fn_xncf_module_builder_show.png)
 
 ## 一键隐藏扩展模块的菜单项
 
 对于有强迫症的开发小伙伴来说，多一层菜单可谓是脑壳疼，那么下面新发布了一个超强功能，让界面一键变美
 
-![Image Text](/start/images/new_function/hidden_extend_menu.png)
+![Image Text](/start/release/images/new_function/hidden_extend_menu.png)
 
 效果如下：
 
-![Image Text](/start/images/new_function/hidden_after_menu_show.png)
+![Image Text](/start/release/images/new_function/hidden_after_menu_show.png)
 
 这个效果对于客户来说可谓绝佳！
 
@@ -67,7 +67,7 @@
 
 重新访问：http://你的域名/Admin/XncfModule/Index
 
-![Image Text](/start/images/new_function/show_open_extend_menu_button.png)
+![Image Text](/start/release/images/new_function/show_open_extend_menu_button.png)
 
 点击开启即可，是不是 So Easy.
 

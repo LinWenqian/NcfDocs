@@ -6,19 +6,19 @@ NCF已经发布新的beta5，本次更新了底层的数据库、重构了数据
 
 直接运行NCF站点可能的报错
 
-![Image text](/start/images/error/error_v506_to_v600.png)
+![Image text](/start/release/images/update/error_v506_to_v600.png)
 
 1、更新最新NCF项目代码
 
-![Image text](/start/images/error/error_v506_to_v600_solution_step1.png)
+![Image text](/start/release/images/update/error_v506_to_v600_solution_step1.png)
 
 2、将 `Senparc.Service` 项目设为启动项目
 
-![Image text](/start/images/error/error_v506_to_v600_solution_step2.png)
+![Image text](/start/release/images/update/error_v506_to_v600_solution_step2.png)
 
 3、在 【程序包管理器控制台】选中 `Senparc.Service` ，然后输入：`update-database -Context SenparcEntities` 回车
 
-![Image text](/start/images/error/error_v506_to_v600_solution_step3.png)
+![Image text](/start/release/images/update/error_v506_to_v600_solution_step3.png)
 
 4、完成，无需其他操作，重新运行，又回到了熟悉的画面
 
