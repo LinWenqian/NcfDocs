@@ -1,8 +1,22 @@
 # NCF常见问题
 
-> 如何修改数据库配置
+> 如何修改默认数据库连接字符串
+
+1.打开文件 /src/Senparc.Web/App_Data/Database/SenparcConfig.config 文件
+
+2.直接编辑 `<ConnectionStringFull>` 节点下的连接字符串，例如：
+
+    <ConnectionStringFull>
+        <![CDATA[Server=.\;Database=NCF;User ID=sa;Pwd=sa;Trusted_Connection=True;integrated security=True;]]>
+    </ConnectionStringFull>
 
 ![Image Text](/start/qa/images/common_problem/modify_database_connectstring.png)
+
+注意：
+
+1、不需要修改其他任何内容，其他设置日后会另作他用，乃为黑客设置“迷宫”而设。
+
+2、正式版发布后，此连接字符串将会被加密，我们会提供加密工具。
 
 > .net命令dotnet ef执行报错
 
